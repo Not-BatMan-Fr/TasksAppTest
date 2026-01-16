@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 # --- DATABASE CONFIGURATION ---
 # Defines the location of our SQLite file
-DATABASE_URL = "sqlite:///./tasks.db"
+DATABASE_URL = "sqlite:///./tasksDB/tasks.db"
 # The engine handles the actual communication with the DB file
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 # SessionLocal is a factory for database connection objects
