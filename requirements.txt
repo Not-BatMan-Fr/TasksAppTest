@@ -1,0 +1,14 @@
+# --- Web Framework ---
+fastapi==0.109.0      # High-performance API framework
+uvicorn==0.27.0       # ASGI server to run the FastAPI app
+
+# --- Database & ORM ---
+sqlalchemy==2.0.25    # SQL toolkit and Object Relational Mapper
+# Note: sqlite3 is built into Python, so no extra driver is needed
+
+# --- Validation ---
+pydantic==2.5.3       # Data validation and settings management
+
+# --- Testing ---
+pytest==7.4.4         # The testing framework
+httpx==0.26.0          # Required by FastAPI's TestClient to make requests
