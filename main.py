@@ -1,7 +1,9 @@
 import uuid
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine, Column, String
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from pydantic import BaseModel
 
 # --- DATABASE CONFIGURATION ---
@@ -30,22 +32,36 @@ class TaskCreate(BaseModel):
 Base.metadata.create_all(bind=engine)
 
 # --- API INITIALIZATION ---
-app = FastAPI()
+tasks = FastAPI()
+
+# --- NEW: Enable CORS ---
+# This allows our frontend to communicate with the backend
+tasks.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, this would be specific URLs
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --- HELPER ---
+# Dependency to get DB session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # --- ENDPOINTS ---
 
 # 1. READ: Get all tasks from the DB
-@app.get("/tasks")
-def get_tasks():
-    db = SessionLocal() # Open a database connection
-    tasks = db.query(Task).all() # Execute 'SELECT * FROM tasks'
-    db.close() # Close connection to free up resources
-    return tasks
+@tasks.get("/tasks")
+def get_tasks(db: Session = Depends(get_db)):
+    return db.query(Task).all() # Execute 'SELECT * FROM tasks'
 
 # 2. CREATE: Add a new task to the DB
-@app.post("/tasks")
-def create_task(task_data: TaskCreate):
-    db = SessionLocal() # Open connection
+@tasks.post("/tasks")
+def create_task(task_data: TaskCreate, db: Session = Depends(get_db)):
     # Create a new Task object with a unique ID
     new_task = Task(
         id=str(uuid.uuid4()), 
@@ -55,5 +71,9 @@ def create_task(task_data: TaskCreate):
     db.add(new_task) # Tell SQLAlchemy we want to save this object
     db.commit() # Save changes to the .db file
     db.refresh(new_task) # Get the latest data (like the generated ID)
-    db.close() # Close connection
+    # db.close() # Close connection
     return new_task
+
+# --- SERVE FRONTEND FILES ---
+# Mount the 'view' directory to serve static files like HTML, CSS, JS
+tasks.mount("/", StaticFiles(directory="view", html=True), name="view")

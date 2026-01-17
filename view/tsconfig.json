@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    /* Target latest version of JavaScript for modern browsers */
+    "target": "ES6",
+    /* Use the standard library for browser environments (DOM) */
+    "lib": ["ES2015", "DOM", "DOM.Iterable", "ESNext"],
+    /* Allow JavaScript files to be compiled alongside TS if needed */
+    "allowJs": true,
+    /* Skip checking the internal code of your libraries (faster) */
+    "skipLibCheck": true,
+    /* Ensure that each file can be safely transpiled */
+    "isolatedModules": true,
+    /* Enable all strict type-checking options for better safety */
+    "strict": true,
+    /* Ensure consistent casing in file names */
+    "forceConsistentCasingInFileNames": true,
+    /* Generate the .js file in the same directory for our FastAPI to find */
+    "outDir": "dist/",
+    /* Handle module resolution like Node.js */
+    "moduleResolution": "node",
+    /* Support importing CommonJS modules */
+    "esModuleInterop": true
+  },
+  /* Only compile our script.ts file */
+  "include": ["src/script.ts"]
+}
