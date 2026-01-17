@@ -1,0 +1,8 @@
+# Local datavase directory
+tasksDB/
+
+# pycache files
+__pycache__/
+
+# virtual environment
+tasksVenv/

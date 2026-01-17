@@ -12,7 +12,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 function fetchTasks() {
     return __awaiter(this, void 0, void 0, function* () {
         // Send a GET request to our FastAPI endpoint
-        const response = yield fetch('http://127.0.0.1:8000/tasks');
+        const response = yield fetch('http://127.0.0.1:8000/app');
         const tasks = yield response.json();
         const list = document.getElementById('taskList');
         list.innerHTML = ''; // Clear current list
@@ -32,7 +32,7 @@ function addTask() {
         if (!title)
             return;
         // Send a POST request with the task title
-        yield fetch('http://127.0.0.1:8000/tasks', {
+        yield fetch('http://127.0.0.1:8000/app', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: title })

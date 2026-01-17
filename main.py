@@ -36,7 +36,7 @@ app = FastAPI()
 
 # --- NEW: Enable CORS ---
 # This allows our frontend to communicate with the backend
-tasks.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], # In production, this would be specific URLs
     allow_methods=["*"],
@@ -76,4 +76,4 @@ def create_task(task_data: TaskCreate, db: Session = Depends(get_db)):
 
 # --- SERVE FRONTEND FILES ---
 # Mount the 'view' directory to serve static files like HTML, CSS, JS
-tasks.mount("/", StaticFiles(directory="view", html=True), name="view")
+app.mount("/", StaticFiles(directory="view", html=True), name="view")
