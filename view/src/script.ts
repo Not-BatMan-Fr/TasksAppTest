@@ -8,7 +8,7 @@ interface Task {
 // Function to fetch and display tasks from the backend
 async function fetchTasks(): Promise<void> {
     // Send a GET request to our FastAPI endpoint
-    const response: Response = await fetch('http://127.0.0.1:8000/app');
+    const response: Response = await fetch('http://127.0.0.1:8000/tasks');
     const tasks: Task[] = await response.json();
     
     const list = document.getElementById('taskList') as HTMLUListElement;
@@ -30,7 +30,7 @@ async function addTask(): Promise<void> {
     if (!title) return;
 
     // Send a POST request with the task title
-    await fetch('http://127.0.0.1:8000/app', {
+    await fetch('http://127.0.0.1:8000/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title })

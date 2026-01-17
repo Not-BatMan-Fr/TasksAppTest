@@ -77,3 +77,5 @@ def create_task(task_data: TaskCreate, db: Session = Depends(get_db)):
 # --- SERVE FRONTEND FILES ---
 # Mount the 'view' directory to serve static files like HTML, CSS, JS
 app.mount("/", StaticFiles(directory="view", html=True), name="view")
+# app.mount("/view", StaticFiles(directory="view/dist"), name="scripts")
+# app.mount("/view", StaticFiles(directory="view/src"), name="styles")

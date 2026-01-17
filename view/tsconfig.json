@@ -15,7 +15,7 @@
     /* Ensure consistent casing in file names */
     "forceConsistentCasingInFileNames": true,
     /* Generate the .js file in the same directory for our FastAPI to find */
-    "outDir": "dist/",
+    "outDir": "/",
     /* Handle module resolution like Node.js */
     "moduleResolution": "node",
     /* Support importing CommonJS modules */
