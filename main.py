@@ -32,7 +32,7 @@ class TaskCreate(BaseModel):
 Base.metadata.create_all(bind=engine)
 
 # --- API INITIALIZATION ---
-tasks = FastAPI()
+app = FastAPI()
 
 # --- NEW: Enable CORS ---
 # This allows our frontend to communicate with the backend
@@ -55,12 +55,12 @@ def get_db():
 # --- ENDPOINTS ---
 
 # 1. READ: Get all tasks from the DB
-@tasks.get("/tasks")
+@app.get("/tasks")
 def get_tasks(db: Session = Depends(get_db)):
     return db.query(Task).all() # Execute 'SELECT * FROM tasks'
 
 # 2. CREATE: Add a new task to the DB
-@tasks.post("/tasks")
+@app.post("/tasks")
 def create_task(task_data: TaskCreate, db: Session = Depends(get_db)):
     # Create a new Task object with a unique ID
     new_task = Task(
